@@ -1,11 +1,12 @@
 const { EventController } = require('../controllers/event.controller');
+const { hasValidToken, isOrganizer } = require('../middlewares/check.middleware');
 const { asyncHandler } = require('../utils/asyncHandler');
 const router = require('express').Router({ mergeParams : true });
 
-router.post('/', asyncHandler(EventController.newEvent));
+router.post('/',hasValidToken, isOrganizer, asyncHandler(EventController.newEvent));
 router.get('/category', asyncHandler(EventController.eventsByCategory));
 router.get('/:id', asyncHandler(EventController.oneEvent));
-router.put('/:eventId', asyncHandler(EventController.updateEvent));
-router.delete('/:eventId', asyncHandler(EventController.deleteEvent));
+router.put('/:eventId',hasValidToken, isOrganizer, asyncHandler(EventController.updateEvent));
+router.delete('/:eventId',hasValidToken, isOrganizer, asyncHandler(EventController.deleteEvent));
 
 exports.eventRoutes = router;

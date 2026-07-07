@@ -45,7 +45,7 @@ exports.EventService = class {
         }
     }
     static async deleteEvent(eventId, organizerId) {
-        const result = await EventRepository.deleteEvent(rawData, eventId, organizerId);
+        const result = await EventRepository.deleteEvent(eventId, organizerId);
         switch (result) {
             case 404: {
                 throw new AppError('event not found', 404);

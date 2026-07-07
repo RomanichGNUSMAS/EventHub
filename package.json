@@ -2,10 +2,10 @@
   "name": "eventhub",
   "version": "1.0.0",
   "description": "��#\u0000 \u0000E\u0000v\u0000e\u0000n\u0000t\u0000H\u0000u\u0000b\u0000\r\u0000 \u0000",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon src/server.js"
   },
   "repository": {
     "type": "git",

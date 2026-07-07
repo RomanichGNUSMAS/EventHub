@@ -2,12 +2,13 @@ const { EventService } = require("../services/event.service")
 
 exports.EventController = class {
     static async newEvent(req, res, next) {
-        const result = await EventService.createEvent(req.body);
+        const organizerId = req.user.id;
+        const result = await EventService.createEvent({...req.body,organizerId});
         return res.status(201).json(result);
     }
 
     static async eventsByCategory(req, res, next) {
-        const result = await EventService.eventsByCategory(req.query.category);
+        const result = await EventService.eventsByCategory({...req.body, category: req.query.category });
         return res.json(result);
     }
 
@@ -18,13 +19,15 @@ exports.EventController = class {
     }
 
     static async updateEvent(req, res, next) {
-        const { params: { eventId, organizerId } } = req;
+        const { params: { eventId } } = req;
+        const organizerId = req.user.id;
         const result = await EventService.updateEvent(req.body,eventId, organizerId);
         return res.json(result)
     }
 
     static async deleteEvent(req, res, next) {
-        const { params: { eventId, organizerId } } = req;
+        const { params: { eventId } } = req;
+        const organizerId = req.user.id;
         const result = await EventService.deleteEvent(eventId, organizerId)
         return res.sendStatus(200)
     }

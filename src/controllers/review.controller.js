@@ -2,7 +2,8 @@ const { ReviewService } = require("../services/review.service");
 
 exports.ReviewController = class {
     static async addReview (req,res,next) {
-        const { params : { eventId, userId }} = req;
+        const { params : { eventId  }} = req;
+        const userId = req.user.id
         const result = await ReviewService.addReview(req.body,userId,eventId)
         return res.status(201).json(result);
     }

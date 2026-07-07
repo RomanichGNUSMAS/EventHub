@@ -6,6 +6,7 @@ const { authRoutes } = require('./routes/auth.route');
 const { eventRoutes } = require('./routes/event.route');
 const { attendanceRoutes } = require('./routes/attendance.route');
 const { reviewRoutes } = require('./routes/review.route');
+const { errorHandler } = require('./middlewares/error.middleware');
 const app = express()
 
 app.use(cors({
@@ -19,4 +20,5 @@ app.use('/events',eventRoutes)
 app.use('/attendances', attendanceRoutes)
 app.use('/reviews', reviewRoutes)
 
+app.use(errorHandler)
 module.exports = { app };

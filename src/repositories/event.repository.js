@@ -6,7 +6,7 @@ const toObjectId = mongoose.Types.ObjectId;
 
 exports.EventRepository = class {
     static async createEvent(rawData) {
-        const found = await userModel.findById(toObjectId(rawData.organizerId));
+        const found = await userModel.findById(new toObjectId(rawData.organizerId));
         if (!found) return 404;
 
         const newEvent = new eventModel(rawData);
@@ -37,14 +37,14 @@ exports.EventRepository = class {
     }
 
     static async oneEventById(eventId) {
-        return await eventModel.findById(toObjectId(eventId));
+        return await eventModel.findById(new toObjectId(eventId));
     }
 
     static async updateEvent(rawData, eventId, organizerId) {
-        const found = await eventModel.findById(toObjectId(eventId));
+        const found = await eventModel.findById(new toObjectId(eventId));
         if (!found) return 404;
 
-        if (!found.organizerId.equals(toObjectId(organizerId))) return 403;
+        if (!found.organizerId.equals(new toObjectId(organizerId))) return 403;
         
         const { _id, organizerId: _, ...clearData } = rawData;
         found.set(clearData);
@@ -53,9 +53,9 @@ exports.EventRepository = class {
     }
 
     static async deleteEvent(eventId, organizerId) {
-        const found = await eventModel.findById(toObjectId(eventId));
+        const found = await eventModel.findById(new toObjectId(eventId));
         if (!found) return 404;
-        if (!found.organizerId.equals(toObjectId(organizerId))) return 403;
+        if (!found.organizerId.equals(new toObjectId(organizerId))) return 403;
         
         await found.deleteOne();
         return true;

@@ -6,14 +6,14 @@ exports.eventCreate = z.object({
     category : z.string(),
     location : z.string(),
     startTime : z.string(),
-    capacity : z.string().min(3),
+    capacity : z.number().min(3),
     endTime : z.string(),
 })
 
 exports.getByCategory = z.object({
     category : z.string(),
-    page : z.number().default(1),
-    limit : z.number().default(10),
+    page : z.number().optional().default(1),
+    limit : z.number().optional().default(10),
     startDate: z.string(),
     endDate: z.string()
 })

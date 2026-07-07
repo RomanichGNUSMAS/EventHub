@@ -8,32 +8,32 @@ const toObjectId = mongoose.Types.ObjectId;
 
 exports.ReviewRepository = class {
     static async addReview(rawData, userId, eventId) {
-        const user = await userModel.findById(toObjectId(userId));
-        const event = await eventModel.findById(toObjectId(eventId));
+        const user = await userModel.findById(new toObjectId(userId));
+        const event = await eventModel.findById(new toObjectId(eventId));
         if (!user || !event) return 404;
 
         const attendance = await attendanceModel.findOne({
-            userId: toObjectId(userId),
-            eventId: toObjectId(eventId)
+            userId: new toObjectId(userId),
+            eventId: new toObjectId(eventId)
         });
         if (!attendance) return 403;
 
         const existingReview = await reviewModel.findOne({
-            userId: toObjectId(userId),
-            eventId: toObjectId(eventId)
+            userId: new toObjectId(userId),
+            eventId: new toObjectId(eventId)
         });
         if (existingReview) return 400;
 
         const newReview = new reviewModel({
             ...rawData,
-            userId: toObjectId(userId),
-            eventId: toObjectId(eventId)
+            userId: new toObjectId(userId),
+            eventId: new toObjectId(eventId)
         });
         
         return await newReview.save();
     }
 
     static async getReviewsForAnEvent(eventId) {
-        return await reviewModel.find({ eventId: toObjectId(eventId) }).populate('userId', 'name email');
+        return await reviewModel.find({ eventId: new toObjectId(eventId) }).populate('userId', 'name email');
     }
 };

@@ -27,7 +27,7 @@ exports.AttendaceService = class {
        const result = await AttendanceRepository.leaveAtThisEvent(eventId,userId);
        switch ( result ) {
             case 404 : {
-                throw new Error('user had already left', 404);
+                throw new AppError('user had already left', 404);
             }
             default : {
                 return result;
